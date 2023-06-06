@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NO₂ Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <style>
+   html, body {
+     margin: 0;
+     padding: 0;
+   }
+
+
+   #main { width: 100%; min-height: 400px
+       background: #0A3D79; /* for non-css3 browsers */
+       background: -moz-linear-gradient(top,  rgb(20,114,199),  rgb(11,61,122));} /* for firefox 3.6+ */
+       /*gradient code from http://www.webdesignerwall.com/tutorials/cross-browser-css-gradient*/
+
+       #map {float:left; display:inline; width: 100%;}
+
+       #chart {float:left; display:inline; width: 100%; padding: 12px;}
+
+
+       #root {
+         margin: 0 auto;
+         padding: 80px 20px;
+       }
+
+       svg {
+         text-align: center;
+       }
+
+      g {
+         text-align: center;
+       }
+
+       text {
+         font-family: Helvetica;
+         font-size: 14px;
+         fill: black;
+       }
+
+       text.title {
+         font-size: 22px;
+         fill: Aqua;
+       }
+
+       .subtitle text {
+         font-size: 12px;
+         text-decoration: underline;
+         fill: gray;
+       }
+
+       path.line {
+       }
+
+       path.area {
+       }
+
+       .axis path,
+       .axis line {
+         fill: none;
+         stroke: slategray;
+         shape-rendering: crispEdges;
+       }
+
+       line.x,
+       line.y,
+       circle.y {
+         stroke: Aqua;
+       }
+
+    </style>
+</head>
+<body>
+  <div id="map" style="height: 100vH;"></div>
+
+  <div id="chart" style="height: 400"></div>
+
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Our JavaScript -->
+  <script src="./map.js"></script>
+  <script src="./chart2.js"></script>
+</body>
+</html>
