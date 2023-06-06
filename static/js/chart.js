@@ -1,5 +1,6 @@
-function chart(data) {
+let markerSet = false
 
+function linechart(data, indexType) {
   const parseDate = d3.timeParse("%Y-%m-%d");
 
   var CustomCircleMarker = L.CircleMarker.extend({
@@ -8,9 +9,26 @@ function chart(data) {
       }
     });
 
+  //var indexType = document.getElementById('chart-type').value;
+
+  if(indexType == "Yearly Index Race") {
+    let currentYear = d3.max(data, d => parseDate(d.year).getFullYear());
+    data = data.filter(d => parseDate(d.year).getFullYear() === currentYear);
+  }
+
+  if(indexType == "Monthly Index Race") {
+    const currentDate = d3.max(data, d => parseDate(d.year));
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    data = data.filter(d => {
+      const date = parseDate(d.year);
+      return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    });
+  }
+
   chart =  LineChart(data, {
     x: d => parseDate(d.year),
-    y: d => d.value,
+    y: d => d[indexType],
     z: d => d.city,
     lat: d => d.lat,
     lng: d => d.lng,
@@ -34,7 +52,7 @@ function chart(data) {
     marginTop = 20, // top margin, in pixels
     marginRight = 10, // right margin, in pixels
     marginBottom = 30, // bottom margin, in pixels
-    marginLeft = 30, // left margin, in pixels
+    marginLeft = 45, // left margin, in pixels
     width = 640, // outer width, in pixels
     height = 300, // outer height, in pixels
     xType = d3.scaleUtc, // type of x-scale
@@ -66,7 +84,7 @@ function chart(data) {
 
     // Compute default domains, and unique the z-domain.
     if (xDomain === undefined) xDomain = d3.extent(X);
-    if (yDomain === undefined) yDomain = [0, d3.max(Y, d => typeof d === "string" ? +d : d)];
+    if (yDomain === undefined) yDomain = d3.extent(Y);
     if (zDomain === undefined) zDomain = Z;
     zDomain = new d3.InternSet(zDomain);
 
@@ -156,15 +174,17 @@ function chart(data) {
         .attr("y", -8);
 
 
-    //var cities = d3.map(data, function(d){return d.z;});
-
     cities = [...new Set(Z)]
       // Add  the markers for each city
     cities.forEach(function(city) {
       var cityData = data.filter(function(d) { return d.city == city; });
       var firstDataPoint = cityData[0];
-      var marker = new CustomCircleMarker([firstDataPoint.lat, firstDataPoint.lng], { city: city, radius: 10, fillOpacity: 0, color: "black", weight: 2, opacity: 0.5 }).addTo(map);
-
+      if(!markerSet){
+        var marker = new CustomCircleMarker([firstDataPoint.lat, firstDataPoint.lng], { city: city, radius: 10, fillOpacity: 0, color: "black", weight: 2, opacity: 0.5 }).addTo(map);
+      } else {
+        var marker = new CustomCircleMarker([firstDataPoint.lat, firstDataPoint.lng], { city: city, radius: 10, fillOpacity: 0, color: "black", weight: 2, opacity: 0 }).addTo(map);
+      }
+      
       // Add interaction between the map and chart
       marker.on("mouseover", function() {
         pointerentered()
@@ -186,7 +206,6 @@ function chart(data) {
         pointerleft();
       });
     });
-
 
     function pointermoved(event) {
       const [xm, ym] = d3.pointer(event);
@@ -237,4 +256,6 @@ function chart(data) {
 
     return Object.assign(svg.node(), {value: null});
   }
+
+  markerSet = true
 }
