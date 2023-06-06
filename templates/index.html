@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NO₂ Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      #main {
+        display: flex;
+        height: 100%;
+        background: #FFFFFF;
+      }
+
+      #map {
+        flex: 3;
+      }
+
+      #chart-container {
+        padding: 12px;
+        position: relative;
+        min-height: 400px;
+      }
+
+      /* Loading spinner styles */
+      .loader {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #chart {
+        display: none;
+        /* Hide chart content initially */
+      }
+
+      #sidebar {
+        flex: 1;
+        min-width: 300px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+      }
+
+      #sidebar-text {
+        font-family: Helvetica;
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      svg {
+        text-align: center;
+      }
+
+      g {
+        text-align: center;
+      }
+
+      text {
+        font-family: Helvetica;
+        font-size: 14px;
+        fill: black;
+      }
+
+      text.title {
+        font-size: 22px;
+        fill: Aqua;
+      }
+
+      .subtitle text {
+        font-size: 12px;
+        text-decoration: underline;
+        fill: gray;
+      }
+
+      path.line {}
+
+      path.area {}
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: slategray;
+        shape-rendering: crispEdges;
+      }
+
+      line.x,
+      line.y,
+      circle.y {
+        stroke: Aqua;
+      }
+
+      .card {
+        width: 80px;
+        color: white;
+      }
+
+      .card-body {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 6px 8px;
+      }
+
+      #legend {
+        position: relative;
+        color: black;
+      }
+
+      #gradient-bar {
+        height: 110px;
+        width: 15px;
+        //border-radius: 10px;
+        background: linear-gradient(#000000, #f80000, #ffa500, #ffdb00, #0089dd, #ffffff);
+      }
+
+      .scale {
+        position: relative;
+      }
+
+      .indicator {
+        position: absolute;
+        min-height: 30px;
+        top: 0;
+        left: 20px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div id="sidebar">
+        <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+        <div id="chart-container">
+          <div class="loader"></div>
+          <!-- Loading spinner -->
+          <div id="chart">
+            <!-- Chart content goes here -->
+          </div>
+        </div>
+        <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Our JavaScript -->
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+    <script>
+      var data = JSON.parse('{{ data|safe }}');
+      console.log(data)
+      window.onload = function() {
+        hideLoader(); // Hide the loading spinner
+        showChartContent(); // Show the chart content
+        chart(data);
+      };
+
+      function hideLoader() {
+        document.querySelector('.loader').style.display = 'none';
+      }
+
+      function showChartContent() {
+        document.getElementById('chart').style.display = 'block';
+      }
+    </script>
+  </body>
+</html>

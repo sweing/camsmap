@@ -1,3 +1,5 @@
 no2_tiles/*
 data.csv
 sync.sh
+env
+__pycache__
