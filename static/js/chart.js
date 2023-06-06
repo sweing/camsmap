@@ -10,7 +10,7 @@ function linechart(data, indexType, yearType, monthType) {
     });
 
   //var indexType = document.getElementById('chart-type').value;
-  let xTickFormat = "%b"
+  let xTickFormat = "%Y"
 
   if(indexType == "Yearly Index Race") {
     xTickFormat = "%b"
