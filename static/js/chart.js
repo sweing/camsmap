@@ -1,6 +1,6 @@
 let markerSet = false
 
-function linechart(data, indexType) {
+function linechart(data, indexType, yearType, monthType) {
   const parseDate = d3.timeParse("%Y-%m-%d");
 
   var CustomCircleMarker = L.CircleMarker.extend({
@@ -10,16 +10,19 @@ function linechart(data, indexType) {
     });
 
   //var indexType = document.getElementById('chart-type').value;
+  let xTickFormat = "%b"
 
   if(indexType == "Yearly Index Race") {
+    xTickFormat = "%b"
     let currentYear = d3.max(data, d => parseDate(d.year).getFullYear());
-    data = data.filter(d => parseDate(d.year).getFullYear() === currentYear);
+    data = data.filter(d => parseDate(d.year).getFullYear() === parseInt(yearType));
   }
-
+  console.log(monthType)
   if(indexType == "Monthly Index Race") {
+    xTickFormat = "%d"
     const currentDate = d3.max(data, d => parseDate(d.year));
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
+    const currentMonth = parseInt(monthType)-1;
+    const currentYear = parseInt(yearType);
     data = data.filter(d => {
       const date = parseDate(d.year);
       return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
@@ -94,7 +97,7 @@ function linechart(data, indexType) {
     // Construct scales and axes.
     const xScale = xType(xDomain, xRange);
     const yScale = yType(yDomain, yRange);
-    const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0);
+    const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.timeFormat(xTickFormat));
     const yAxis = d3.axisLeft(yScale).ticks(height / 60, yFormat);
 
     // Compute titles.

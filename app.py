@@ -17,9 +17,13 @@ def get_data():
     # Serve the processed data to the front end
     data_json = data.to_json(orient='records')
 
+    # Extract unique years and months
+    data['year'] = pd.to_datetime(data['year'])
+    years = sorted(data['year'].dt.year.unique(), reverse=True)
+    months = sorted(data['year'].dt.month.unique())
 
     # return the index file and the data
-    return render_template("index.html", data=data_json, variables=variables)
+    return render_template("index.html", data=data_json, variables=variables, years=years, months=months)
 
 
 if __name__ == '__main__':

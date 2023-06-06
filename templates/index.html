@@ -156,6 +156,22 @@
         left: 20px;
         font-size: 14px;
       }
+
+      .table-container {
+        display: table;
+        width: 100%;
+      }
+
+      .table-row {
+        display: table-row;
+      }
+
+      .table-cell {
+        display: table-cell;
+        padding: 2px;
+        font-family: Helvetica;
+        font-size: 14px;
+      }
     </style>
 
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
@@ -165,19 +181,45 @@
     <div id="main">
       <div id="sidebar">
         <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
-        <div>
-          <label for="chart-type">Variable:</label>
-          <select id="chart-type" class="dropdown">
-            {% for col in variables %}
-                <option value="{{ col }}">{{ col }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div>
-          <label for="chart-type">Month:</label>
-        </div>
-        <div>
-          <label for="chart-type">Year:</label>
+        <div class="table-container">
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="chart-type">Variable:</label>
+            </div>
+            <div class="table-cell">
+              <select id="chart-type" class="dropdown">
+                {% for col in variables %}
+                  <option value="{{ col }}">{{ col }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="month-type">Month:</label>
+            </div>
+            <div class="table-cell">
+              <select id="month-type" class="dropdown">
+                {% for month in months %}
+                  <option value="{{ month }}">{{ month }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="year-type">Year:</label>
+            </div>
+            <div class="table-cell">
+              <select id="year-type" class="dropdown">
+                {% for year in years %}
+                  <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
         </div>
         <div id="chart-container">
           <div class="loader"></div>
@@ -201,7 +243,7 @@
       window.onload = function() {
         hideLoader(); // Hide the loading spinner
         showChartContent(); // Show the chart content
-        linechart(data, document.getElementById('chart-type').value);
+        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
       };
 
       function hideLoader() {
@@ -215,7 +257,17 @@
       // Add event listener to the dropdown menu
       document.getElementById('chart-type').addEventListener('change', function() {
         document.getElementById('chart').innerHTML = '';
-        linechart(data, document.getElementById('chart-type').value); // Call the chart function when the selection changes
+        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+      });
+
+      document.getElementById('year-type').addEventListener('change', function() {
+        document.getElementById('chart').innerHTML = '';
+        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+      });
+
+      document.getElementById('month-type').addEventListener('change', function() {
+        document.getElementById('chart').innerHTML = '';
+        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
       });
     </script>
   </body>
