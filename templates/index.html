@@ -269,9 +269,10 @@
               <div class="table-cell">
                 <select id="month-type-index" class="dropdown">
                   {% for month in months %}
-                    <option value="{{ month }}">{{ month }}</option>
+                    <option value="{{ month }}" {% if month == last_month %}selected{% endif %}>{{ month }}</option>
                   {% endfor %}
                 </select>
+
               </div>
             </div>
 
@@ -282,7 +283,7 @@
               <div class="table-cell">
                 <select id="year-type-index" class="dropdown">
                   {% for year in years %}
-                    <option value="{{ year }}">{{ year }}</option>
+                    <option value="{{ year }}" {% if year == max_year %}selected{% endif %}>{{ year }}</option>
                   {% endfor %}
                 </select>
               </div>

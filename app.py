@@ -19,11 +19,15 @@ def get_data():
 
     # Extract unique years and months
     data['year'] = pd.to_datetime(data['year'])
-    years = sorted(data['year'].dt.year.unique(), reverse=True)
+    years = sorted(data['year'].dt.year.unique())
     months = sorted(data['year'].dt.month.unique())
 
+    max_year = data['year'].dt.year.max()
+    max_year_data = data[data['year'].dt.year == max_year]
+    last_month = max_year_data['year'].dt.month.max()
+
     # return the index file and the data
-    return render_template("index.html", data=data_json, variables=variables, years=years, months=months)
+    return render_template("index.html", data=data_json, variables=variables, years=years, months=months, last_month = last_month, max_year = max_year)
 
 
 if __name__ == '__main__':
