@@ -76,6 +76,22 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     voronoi // show a Voronoi overlay? (for debugging)
   } = {}) {
     // Compute values.
+
+    // Check if data exists
+    if (data.length === 0) {
+      d3.select("#" + chartElement)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("text")
+        .attr("x", width / 2)
+        .attr("y", height / 2)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .text("Data does not exist");
+      return; // Return from the function
+    }
+
     const X = d3.map(data, x);
     const Y = d3.map(data, y);
     const Z = d3.map(data, z);

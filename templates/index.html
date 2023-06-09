@@ -224,7 +224,11 @@
                 </select> -->
                 <select id="chart-type-averages" class="dropdown">
                   {% for col in ["365d moving average", "Composite moving average"] %}
-                    <option value="{{ col }}">{{ col }}</option>
+                    {% if col == "Composite moving average" %}
+                      <option value="{{ col }}" selected>{{ col }}</option>
+                    {% else %}
+                      <option value="{{ col }}">{{ col }}</option>
+                    {% endif %}                  
                   {% endfor %}
                 </select>
               </div>
@@ -248,7 +252,7 @@
               <div class="table-cell">
                 <select id="chart-type-index" class="dropdown">
                   {% for col in ["Monthly Index Race", "Yearly Index Race"] %}
-                    {% if col == "Monthly Index Race" %}
+                    {% if col == "Yearly Index Race" %}
                       <option value="{{ col }}" selected>{{ col }}</option>
                     {% else %}
                       <option value="{{ col }}">{{ col }}</option>
