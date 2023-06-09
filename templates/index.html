@@ -248,7 +248,11 @@
               <div class="table-cell">
                 <select id="chart-type-index" class="dropdown">
                   {% for col in ["Monthly Index Race", "Yearly Index Race"] %}
-                    <option value="{{ col }}">{{ col }}</option>
+                    {% if col == "Monthly Index Race" %}
+                      <option value="{{ col }}" selected>{{ col }}</option>
+                    {% else %}
+                      <option value="{{ col }}">{{ col }}</option>
+                    {% endif %}
                   {% endfor %}
                 </select>
               </div>
@@ -302,9 +306,19 @@
       window.onload = function() {
         hideLoader(); // Hide the loading spinner
         showChartContent(); // Show the chart content
+        var chartTypeIndex = document.getElementById('chart-type-index').value;
+        var monthTypeIndex = document.getElementById('month-type-index');
+        var yearTypeIndex = document.getElementById('year-type-index').value;
+
         linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
-        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+        linechart(data, document.getElementById('chart-type-index').value, yearTypeIndex, monthTypeIndex.value, "chart-index");
         linechart(data, 'Raw', null, null, "chart-raw");
+
+        
+        if (chartTypeIndex === "Yearly Index Race") {
+          monthTypeIndex.disabled = true;
+          monthTypeIndex.style.opacity = '0.7';
+        }        
       };
 
       function hideLoader() {
@@ -326,8 +340,21 @@
 
       // Add event listener to the dropdown menu
       document.getElementById('chart-type-index').addEventListener('change', function() {
+        var chartTypeIndex = document.getElementById('chart-type-index').value;
+        var monthTypeIndex = document.getElementById('month-type-index');
+
+        // Check if "Yearly Index Race" is selected
+        if (chartTypeIndex === 'Yearly Index Race') {
+          // Disable the month dropdown and add a grayed-out appearance
+          monthTypeIndex.disabled = true;
+          monthTypeIndex.style.opacity = '0.7';
+        } else {
+          // Enable the month dropdown and remove the grayed-out appearance
+          monthTypeIndex.disabled = false;
+          monthTypeIndex.style.opacity = '1';
+        }
         document.getElementById('chart-index').innerHTML = '';
-        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+        linechart(data, chartTypeIndex, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
       });
 
       document.getElementById('year-type-index').addEventListener('change', function() {
