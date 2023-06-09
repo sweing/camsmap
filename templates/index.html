@@ -61,13 +61,28 @@
       }
 
       #sidebar {
+        display: flex;
         flex: 1;
         min-width: min(80%, 600px);
         max-width: min(80%, 600px);
         height: 100%;
-        display: flex;
         flex-direction: column;
         overflow: auto;
+        position: relative; /* Added position relative */
+        background-color: white;
+      }
+
+      #sidebar-content {
+        display: none;
+      }
+
+      #sidebar .loader {
+        /* Added loader styles for the sidebar */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
       }
 
       #sidebar-text {
@@ -142,7 +157,7 @@
       #gradient-bar {
         height: 110px;
         width: 15px;
-        //border-radius: 10px;
+        /* border-radius: 10px; */
         background: linear-gradient(#000000, #f80000, #ffa500, #ffdb00, #0089dd, #ffffff);
       }
 
@@ -180,57 +195,100 @@
   </head>
   <body>
     <div id="main">
-      <div id="sidebar">
-        <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
-        <div class="table-container">
-          <div class="table-row">
-            <div class="table-cell">
-              <label for="chart-type">Variable:</label>
-            </div>
-            <div class="table-cell">
-              <select id="chart-type" class="dropdown">
-                {% for col in variables %}
-                  <option value="{{ col }}">{{ col }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-cell">
-              <label for="month-type">Month:</label>
-            </div>
-            <div class="table-cell">
-              <select id="month-type" class="dropdown">
-                {% for month in months %}
-                  <option value="{{ month }}">{{ month }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="table-row">
-            <div class="table-cell">
-              <label for="year-type">Year:</label>
-            </div>
-            <div class="table-cell">
-              <select id="year-type" class="dropdown">
-                {% for year in years %}
-                  <option value="{{ year }}">{{ year }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div id="chart-container">
-          <div class="loader"></div>
-          <!-- Loading spinner -->
-          <div id="chart">
-            <!-- Chart content goes here -->
-          </div>
-        </div>
+      
         
-        <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+      <div id="sidebar">
+        <div class="loader"></div> <!-- Add the loader element to the sidebar -->
+        <div id="sidebar-content">
+          
+          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          
+          <div id="chart-container">
+            <div id="chart-raw">
+              <!-- Chart content goes here -->
+            </div>
+          </div>
+          
+          
+          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          <div class="table-container">
+            <div class="table-row">
+              <div class="table-cell">
+                <label for="chart-type-averages">Variable:</label>
+              </div>
+              <div class="table-cell">
+<!--                 <select id="chart-type" class="dropdown">
+                  {% for col in variables %}
+                    <option value="{{ col }}">{{ col }}</option>
+                  {% endfor %}
+                </select> -->
+                <select id="chart-type-averages" class="dropdown">
+                  {% for col in ["365d moving average", "Composite moving average"] %}
+                    <option value="{{ col }}">{{ col }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="chart-container">
+            <div id="chart-averages">
+              <!-- Chart content goes here -->
+            </div>
+          </div>
+
+          
+
+          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+
+          <div class="table-container">
+            <div class="table-row">
+              <div class="table-cell">
+                <label for="chart-type-index">Variable:</label>
+              </div>
+              <div class="table-cell">
+                <select id="chart-type-index" class="dropdown">
+                  {% for col in ["Monthly Index Race", "Yearly Index Race"] %}
+                    <option value="{{ col }}">{{ col }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="table-row">
+              <div class="table-cell">
+                <label for="month-type-index">Month:</label>
+              </div>
+              <div class="table-cell">
+                <select id="month-type-index" class="dropdown">
+                  {% for month in months %}
+                    <option value="{{ month }}">{{ month }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="table-row">
+              <div class="table-cell">
+                <label for="year-type-index">Year:</label>
+              </div>
+              <div class="table-cell">
+                <select id="year-type-index" class="dropdown">
+                  {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="chart-container">
+            <div id="chart-index">
+              <!-- Chart content goes here -->
+            </div>
+          </div>
+
+          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+
+        </div>
       </div>
       <div id="map"></div>
     </div>
@@ -244,7 +302,9 @@
       window.onload = function() {
         hideLoader(); // Hide the loading spinner
         showChartContent(); // Show the chart content
-        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+        linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
+        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+        linechart(data, 'Raw', null, null, "chart-raw");
       };
 
       function hideLoader() {
@@ -252,23 +312,32 @@
       }
 
       function showChartContent() {
-        document.getElementById('chart').style.display = 'block';
+        //document.getElementById('chart-averages').style.display = 'block';
+        //document.getElementById('chart-raw').style.display = 'block';
+        //document.getElementById('chart-index').style.display = 'block';
+        document.getElementById('sidebar-content').style.display = 'block';
       }
 
       // Add event listener to the dropdown menu
-      document.getElementById('chart-type').addEventListener('change', function() {
-        document.getElementById('chart').innerHTML = '';
-        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+      document.getElementById('chart-type-averages').addEventListener('change', function() {
+        document.getElementById('chart-averages').innerHTML = '';
+        linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
       });
 
-      document.getElementById('year-type').addEventListener('change', function() {
-        document.getElementById('chart').innerHTML = '';
-        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+      // Add event listener to the dropdown menu
+      document.getElementById('chart-type-index').addEventListener('change', function() {
+        document.getElementById('chart-index').innerHTML = '';
+        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
       });
 
-      document.getElementById('month-type').addEventListener('change', function() {
-        document.getElementById('chart').innerHTML = '';
-        linechart(data, document.getElementById('chart-type').value, document.getElementById('year-type').value, document.getElementById('month-type').value);
+      document.getElementById('year-type-index').addEventListener('change', function() {
+        document.getElementById('chart-index').innerHTML = '';
+        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+      });
+
+      document.getElementById('month-type-index').addEventListener('change', function() {
+        document.getElementById('chart-index').innerHTML = '';
+        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
       });
     </script>
   </body>

@@ -1,8 +1,9 @@
 let markerSet = false
+let pathSelections = []; // Array to store path selections
 
-function linechart(data, indexType, yearType, monthType) {
+
+function linechart(data, indexType, yearType, monthType, chartElement = "chart-raw") {
   const parseDate = d3.timeParse("%Y-%m-%d");
-
   var CustomCircleMarker = L.CircleMarker.extend({
       options: {
         className: 'city' // Add a custom class to the marker element
@@ -17,7 +18,6 @@ function linechart(data, indexType, yearType, monthType) {
     let currentYear = d3.max(data, d => parseDate(d.year).getFullYear());
     data = data.filter(d => parseDate(d.year).getFullYear() === parseInt(yearType));
   }
-  console.log(monthType)
   if(indexType == "Monthly Index Race") {
     xTickFormat = "%d"
     const currentDate = d3.max(data, d => parseDate(d.year));
@@ -35,7 +35,7 @@ function linechart(data, indexType, yearType, monthType) {
     z: d => d.city,
     lat: d => d.lat,
     lng: d => d.lng,
-    width: document.getElementById("chart").offsetWidth,
+    width: document.getElementById(chartElement).offsetWidth,
     height: 400,
     color: "steelblue",
     //yLabel: "Nitrogen dioxide, composite 1-to-3-year-moving-averages (60/30/10)",
@@ -110,7 +110,7 @@ function linechart(data, indexType, yearType, monthType) {
         .x(i => xScale(X[i]))
         .y(i => yScale(Y[i]));
 
-    const svg = d3.select("#chart")
+    const svg = d3.select("#" + chartElement)
         .append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -176,6 +176,7 @@ function linechart(data, indexType, yearType, monthType) {
         .attr("text-anchor", "middle")
         .attr("y", -8);
 
+    pathSelections.push(path); // Add path selection to the array
 
     cities = [...new Set(Z)]
       // Add  the markers for each city
@@ -191,7 +192,15 @@ function linechart(data, indexType, yearType, monthType) {
       // Add interaction between the map and chart
       marker.on("mouseover", function() {
         pointerentered()
-        path.style("stroke", ([z]) => city === z ? null : "#ddd").filter(([z]) => city === z).raise();
+
+        pathSelections.forEach(function (pathSelection) {
+          pathSelection
+            .style("stroke", ([z]) => city === z ? null : "#ddd")
+            .filter(([z]) => city === z)
+            .raise();
+        });
+
+        //path.style("stroke", ([z]) => city === z ? null : "#ddd").filter(([z]) => city === z).raise();
         if (T) dot.select("text").text(null);
         dot.attr("transform", null);
 
@@ -217,12 +226,17 @@ function linechart(data, indexType, yearType, monthType) {
       let lng = LNG[i];
       let zoom = map.getZoom();
       
-      map.flyTo([lat, lng], zoom, {
+      /*map.flyTo([lat, lng], zoom, {
         animate: true,
         duration: 1.5
+      });*/
+
+      //path.style("stroke", ([z]) => Z[i] === z ? null : "#ddd").filter(([z]) => Z[i] === z).raise();
+      pathSelections.forEach(function (pathSelection) {
+          pathSelection
+            .style("stroke", ([z]) => Z[i] === z ? null : "#ddd").filter(([z]) => Z[i] === z).raise();
       });
 
-      path.style("stroke", ([z]) => Z[i] === z ? null : "#ddd").filter(([z]) => Z[i] === z).raise();
       dot.attr("transform", `translate(${xScale(X[i])},${yScale(Y[i])})`);
       if (T) dot.select("text").text(T[i]);
       svg.property("value", O[i]).dispatch("input", {bubbles: true});
@@ -240,12 +254,19 @@ function linechart(data, indexType, yearType, monthType) {
     }
 
     function pointerentered() {
-      path.style("mix-blend-mode", null).style("stroke", "#ddd");
+      //path.style("mix-blend-mode", null).style("stroke", "#ddd");
+      pathSelections.forEach(function (pathSelection) {
+          pathSelection
+            .style("mix-blend-mode", null).style("stroke", "#ddd");
+      });
       dot.attr("display", null);
     }
 
     function pointerleft() {
-      path.style("mix-blend-mode", mixBlendMode).style("stroke", null);
+      pathSelections.forEach(function (pathSelection) {
+          pathSelection
+            .style("mix-blend-mode", mixBlendMode).style("stroke", null);
+      });
       dot.attr("display", "none");
       svg.node().value = null;
       svg.dispatch("input", {bubbles: true});
