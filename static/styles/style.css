@@ -1,0 +1,182 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#main {
+  display: flex;
+  height: 100%;
+  background: #FBFBF9;
+}
+
+#map {
+  flex: 3;
+}
+
+#chart-container {
+  padding: 12px;
+  position: relative;
+  height: 400px;
+}
+
+/* Loading spinner styles */
+.loader {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#chart {
+  display: none;
+  /* Hide chart content initially */
+}
+
+#sidebar {
+  display: flex;
+  flex: 1;
+  min-width: min(80%, 600px);
+  max-width: min(80%, 600px);
+  height: 100%;
+  flex-direction: column;
+  overflow: auto;
+  position: relative; /* Added position relative */
+  background-color: white;
+}
+
+#sidebar-content {
+  display: none;
+}
+
+#sidebar .loader {
+  /* Added loader styles for the sidebar */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+#sidebar-text {
+  font-family: Helvetica;
+  font-size: 14px;
+  padding: 12px;
+}
+
+label {
+  font-family: Helvetica;
+  font-size: 14px;
+  padding: 12px;
+}
+
+svg {
+  text-align: center;
+}
+
+g {
+  text-align: center;
+}
+
+text {
+  font-family: Helvetica;
+  font-size: 14px;
+  fill: black;
+}
+
+text.title {
+  font-size: 22px;
+  fill: Aqua;
+}
+
+.subtitle text {
+  font-size: 12px;
+  text-decoration: underline;
+  fill: gray;
+}
+
+path.line {}
+
+path.area {}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: slategray;
+  shape-rendering: crispEdges;
+}
+
+line.x,
+line.y,
+circle.y {
+  stroke: Aqua;
+}
+
+.card {
+  width: 80px;
+  color: white;
+}
+
+.card-body {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 6px 8px;
+}
+
+#legend {
+  position: relative;
+  color: black;
+}
+
+#gradient-bar {
+  height: 110px;
+  width: 15px;
+  /* border-radius: 10px; */
+  background: linear-gradient(#000000, #f80000, #ffa500, #ffdb00, #0089dd, #ffffff);
+}
+
+.scale {
+  position: relative;
+}
+
+.indicator {
+  position: absolute;
+  min-height: 30px;
+  top: 0;
+  left: 20px;
+  font-size: 14px;
+}
+
+.table-container {
+  display: table;
+  width: 100%;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 2px;
+  font-family: Helvetica;
+  font-size: 14px;
+}
