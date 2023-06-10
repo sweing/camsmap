@@ -30,5 +30,5 @@ def get_data():
     return render_template("index.html", data=data_json, variables=variables, years=years, months=months, last_month = last_month, max_year = max_year)
 
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+  app.run(host='0.0.0.0', port=1024, debug=True)
