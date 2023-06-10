@@ -19,7 +19,7 @@ def get_data():
 
     # Extract unique years and months
     data['year'] = pd.to_datetime(data['year'])
-    years = sorted(data['year'].dt.year.unique())
+    years = sorted(data['year'].dt.year.unique(), reverse=True)
     months = sorted(data['year'].dt.month.unique())
 
     max_year = data['year'].dt.year.max()

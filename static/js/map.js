@@ -21,7 +21,7 @@ var chartControl = L.Control.extend({
 });
 
 // Set up the Leaflet map
-var map = L.map('map', {zoomControl: false}).setView([52.5200, 13.4050], 6);
+var map = L.map('map', {zoomControl: false}).setView([52.5200, 13.4050], 5);
 
 //map.addControl(new chartControl());
 
