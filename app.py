@@ -1,13 +1,15 @@
+#!/usr/bin/env python3.6
+import os
 from flask import Flask, render_template, jsonify
 import json
 import pandas as pd
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/camsmap/static')
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-@app.route('/')
+@app.route('/camsmap')
 def get_data():
     data = pd.read_csv('static/data/data.csv')
 

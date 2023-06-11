@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NO₂ Map</title>
+    <title>CAMS Map</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-    <link rel="stylesheet" href="./static/styles/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
-  <body>
+  <body class="dark-theme">
     <div id="main">
       
         
@@ -18,7 +18,30 @@
         <div class="loader"></div> <!-- Add the loader element to the sidebar -->
         <div id="sidebar-content">
           
-          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          <div id="sidebar-text"> <h1>CAMS Map</h1>
+
+          <h2>Introduction</h2>
+
+          Nitrogen dioxide (NO2), a byproduct of burning fossil fuels, can serve as a visible marker of our climate emergency. As these fuels are burned, NO2 is released into the atmosphere, alongside CO2, intensifying the climate emergency. Understanding this connection can give us opportunities in our efforts to combat the environmental crisis we face.<br><br>
+
+          NO2 plays a central role in air quality and has been used to identify fossil fuel hot-spots. It is a gas created by incomplete combustion, is short-living and dissolves already hours after release. As a result, this pollutant tends to remain in close proximity to its emission sources, causing concentrations to rapidly fluctuate when there are changes in those sources. As such, it is also a very powerful indicator for local pollution. Exposure to nitrogen oxides can lead to a higher probability of respiratory problems and asthma. Thus, the burning of fossil fuels is not only a global problem, but also a local one. <br><br>
+
+          By decreasing NO2 emissions, we not only improve air quality and protect human health but also address the root cause of climate change. This knowledge empowers us to take decisive action and implement measures that can mitigate the adverse impacts of greenhouse gas emissions.<br><br>
+
+          This small project asks the following question: Would it be valuable to have an indicator that tracks and rewards cities for their efforts in reducing NO2 emissions? How can we implement such indicator that measures progress in reducing NO2 levels over time?
+
+          <h2>Data</h2>
+
+          The dataset provides information on air quality in Europe and worldwide, based on satellite and ground-based observations and advanced numerical models. The dataset is produced by the Copernicus Atmosphere Monitoring Service (CAMS), which is part of the European Union’s Earth observation programme. 
+
+          <h2>Raw data representation</h2>
+          
+          The plot reveals the fluctuations and seasonality inherent in the raw data. NO2 levels tend to be noisier, with spikes and dips influenced by various factors, including traffic patterns, weather conditions, and industrial activities. Notably, NO2 levels often show higher concentrations during winter months.<br><br>
+
+          This unfiltered depiction of NO2 levels provides a clear picture of the real-time variations experienced by each city, offering insights into the immediate impact of local emissions and external factors on air quality.<br><br>
+
+          By observing this plot, we can identify cities with higher or lower average NO2 levels, assess the extent of fluctuations, and gain a preliminary understanding of the NO2 dynamics across the 50 European cities in our dataset.
+          <br><br></div>
           
           <div id="chart-container">
             <div id="chart-raw">
@@ -27,7 +50,16 @@
           </div>
           
           
-          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          <div id="sidebar-text"> 
+          <h2>Deseasonalization</h2>
+
+          The second plot presents a deseasonalized view of NO2 data, offering a clearer understanding of the medium-term trends in NO2 levels across the 50 European cities.<br><br>
+
+          To achieve deseasonalization, we apply a composite moving average calculation. This method combines the moving averages of different timeframes to create a more balanced indicator of NO2 levels. The weights assigned to each moving average ensure a focus on the middle run, capturing both short-term fluctuations and longer-term patterns.<br><br>
+
+          By selecting the deseasonalized view in the dropdown menu, you can compare two options: the composite moving average and the 365-day moving average. The composite moving average emphasizes the medium-term trends by considering the last 365 days, 2 years, and 3 years, while the 365-day moving average considers only the last 365 days.<br><br>
+
+          This deseasonalized plot allows us to discern patterns beyond immediate fluctuations, providing a clearer insight into the overall trajectory of NO2 levels over time. It helps identify periods of consistent improvement or deterioration and facilitates the evaluation of long-term efforts to reduce NO2 emissions.<br><br></div>
           <div class="table-container">
             <div class="table-row">
               <div class="table-cell">
@@ -59,7 +91,18 @@
 
           
 
-          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          <div id="sidebar-text">
+          <h2>A contest to slash NO2 levels</h2>
+
+          The third plot introduces a contest centered around NO2 reduction among the 50 European cities. This competition aims to recognize and celebrate the cities that achieve the most significant reductions in NO2 levels over a specific period.<br><br>
+
+          Using the dropdown menus, you can choose between two time frames, yearly and monthly. Once selected, you can further specify the year or month of interest. The plot then indexes all NO2 data points to 100 at the beginning of the chosen period.<br><br>
+
+          As time progresses, the plot tracks the changes in NO2 levels for each city. At the end of the month or year, the city that has achieved the most substantial reduction in NO2 levels, relative to their initial index of 100, is crowned the champion.<br><br>
+
+          This competition encourages cities to actively work towards reducing NO2 emissions, fostering a sense of friendly rivalry and collective progress. It provides a visual representation of each city's journey, highlighting the efforts made and the positive impact achieved in terms of NO2 reduction.<br><br>
+
+          By incorporating this competition into the visualization, we create a platform to showcase success stories, inspire healthy competition, and encourage cities to prioritize and implement effective strategies to reduce their NO2 emissions. It spurs innovation and collaboration while empowering cities to make a tangible difference in their local environments and contribute to the broader goal of combatting climate change.<br><br></div>
 
           <div class="table-container">
             <div class="table-row">
@@ -112,7 +155,12 @@
             </div>
           </div>
 
-          <div id="sidebar-text"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div>
+          <div id="sidebar-text"> 
+          <h2>Outlook</h2>
+
+          Wouldn't it be exciting to have an ongoing championship that tracks NO2 reduction progress, motivating cities to push the boundaries of sustainability and environmental stewardship? Let's envision a future where this competition becomes a catalyst for change and inspires cities worldwide to embark on their own journeys towards cleaner air and a greener planet.<br><br>
+
+          Imagine a global competition system supported by satellite data, driving places worldwide to compete in reducing NO2 emissions. This scalable approach harnesses the power of technology to monitor and measure progress on a grand scale. By leveraging satellite data, we can assess NO2 levels with precision, empowering places from every corner of the globe to participate in this transformative competition. Let the race to reduce NO2 emissions begin.<br><br><br><br></div>
 
         </div>
       </div>

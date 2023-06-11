@@ -190,7 +190,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
         .attr("text-anchor", "middle")
-        .attr("y", -8);
+        .attr("y", -20);
 
     pathSelections.push(path); // Add path selection to the array
 
