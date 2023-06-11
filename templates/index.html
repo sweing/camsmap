@@ -28,7 +28,9 @@
 
           By decreasing NO2 emissions, we not only improve air quality and protect human health but also address the root cause of climate change. This knowledge empowers us to take decisive action and implement measures that can mitigate the adverse impacts of greenhouse gas emissions.<br><br>
 
-          This small project asks the following question: Would it be valuable to have an indicator that tracks and rewards cities for their efforts in reducing NO2 emissions? How can we implement such indicator that measures progress in reducing NO2 levels over time?
+          This small project asks the following question: Would it be valuable to have an indicator that tracks and rewards cities for their efforts in reducing NO2 emissions? How can we implement such indicator that measures progress in reducing NO2 levels over time?<br><br>
+
+          The code is available on <a href="https://github.com/sweing/camsmap" target="_blank" rel="noopener noreferrer">GitHub</a>.
 
           <h2>Data</h2>
 
@@ -41,7 +43,7 @@
           This unfiltered depiction of NO2 levels provides a clear picture of the real-time variations experienced by each city, offering insights into the immediate impact of local emissions and external factors on air quality.<br><br>
 
           By observing this plot, we can identify cities with higher or lower average NO2 levels, assess the extent of fluctuations, and gain a preliminary understanding of the NO2 dynamics across the 50 European cities in our dataset.
-          <br><br></div>
+          <br></div>
           
           <div id="chart-container">
             <div id="chart-raw">
@@ -51,6 +53,8 @@
           
           
           <div id="sidebar-text"> 
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>.
+
           <h2>Deseasonalization</h2>
 
           The second plot presents a deseasonalized view of NO2 data, offering a clearer understanding of the medium-term trends in NO2 levels across the 50 European cities.<br><br>
@@ -59,7 +63,7 @@
 
           By selecting the deseasonalized view in the dropdown menu, you can compare two options: the composite moving average and the 365-day moving average. The composite moving average emphasizes the medium-term trends by considering the last 365 days, 2 years, and 3 years, while the 365-day moving average considers only the last 365 days.<br><br>
 
-          This deseasonalized plot allows us to discern patterns beyond immediate fluctuations, providing a clearer insight into the overall trajectory of NO2 levels over time. It helps identify periods of consistent improvement or deterioration and facilitates the evaluation of long-term efforts to reduce NO2 emissions.<br><br></div>
+          This deseasonalized plot allows us to discern patterns beyond immediate fluctuations, providing a clearer insight into the overall trajectory of NO2 levels over time. It helps identify periods of consistent improvement or deterioration and facilitates the evaluation of long-term efforts to reduce NO2 emissions.<br></div>
           <div class="table-container">
             <div class="table-row">
               <div class="table-cell">
@@ -79,7 +83,7 @@
                       <option value="{{ col }}">{{ col }}</option>
                     {% endif %}                  
                   {% endfor %}
-                </select>
+                </select><br><br>
               </div>
             </div>
           </div>
@@ -89,9 +93,9 @@
             </div>
           </div>
 
-          
-
           <div id="sidebar-text">
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, own calculations.
+
           <h2>A contest to slash NO2 levels</h2>
 
           The third plot introduces a contest centered around NO2 reduction among the 50 European cities. This competition aims to recognize and celebrate the cities that achieve the most significant reductions in NO2 levels over a specific period.<br><br>
@@ -102,7 +106,7 @@
 
           This competition encourages cities to actively work towards reducing NO2 emissions, fostering a sense of friendly rivalry and collective progress. It provides a visual representation of each city's journey, highlighting the efforts made and the positive impact achieved in terms of NO2 reduction.<br><br>
 
-          By incorporating this competition into the visualization, we create a platform to showcase success stories, inspire healthy competition, and encourage cities to prioritize and implement effective strategies to reduce their NO2 emissions. It spurs innovation and collaboration while empowering cities to make a tangible difference in their local environments and contribute to the broader goal of combatting climate change.<br><br></div>
+          By incorporating this competition into the visualization, we create a platform to showcase success stories, inspire healthy competition, and encourage cities to prioritize and implement effective strategies to reduce their NO2 emissions. It spurs innovation and collaboration while empowering cities to make a tangible difference in their local environments and contribute to the broader goal of combatting climate change.<br></div>
 
           <div class="table-container">
             <div class="table-row">
@@ -154,8 +158,9 @@
               <!-- Chart content goes here -->
             </div>
           </div>
+          <div id="sidebar-text">
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, own calculations.
 
-          <div id="sidebar-text"> 
           <h2>Outlook</h2>
 
           Wouldn't it be exciting to have an ongoing championship that tracks NO2 reduction progress, motivating cities to push the boundaries of sustainability and environmental stewardship? Let's envision a future where this competition becomes a catalyst for change and inspires cities worldwide to embark on their own journeys towards cleaner air and a greener planet.<br><br>
@@ -168,8 +173,13 @@
     </div>
 
     <!-- Our JavaScript -->
+    <script>
+      var bounds = {{ bounds|safe }};
+    </script>
+
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
     <script>
       var data = JSON.parse('{{ data|safe }}');
       //console.log(data)

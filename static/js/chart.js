@@ -88,10 +88,12 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
         .attr("y", height / 2)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        .text("Data does not exist");
+        .text("Data not available yet!");
       return; // Return from the function
     }
-
+    if (indexType === "Raw" || indexType === "365d moving average" || indexType === "Composite moving average") {
+      yLabel = "Surface concentration [µg/m³]";
+    }
     const X = d3.map(data, x);
     const Y = d3.map(data, y);
     const Z = d3.map(data, z);
@@ -161,7 +163,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
             .attr("stroke-opacity", 0.1))
         .call(g => g.append("text")
             .attr("x", -marginLeft)
-            .attr("y", 10)
+            .attr("y", 12)
             .attr("fill", "currentColor")
             .attr("text-anchor", "start")
             .text(yLabel));
@@ -234,7 +236,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
         pointerleft();
       });
     });
-
+    
     function pointermoved(event) {
       const [xm, ym] = d3.pointer(event);
       const i = d3.least(I, i => Math.hypot(xScale(X[i]) - xm, yScale(Y[i]) - ym)); // closest point

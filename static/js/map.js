@@ -21,8 +21,12 @@ var chartControl = L.Control.extend({
 });
 
 // Set up the Leaflet map
-var map = L.map('map', {zoomControl: false}).setView([52.5200, 13.4050], 5);
-
+var map = L.map('map', {zoomControl: false});
+// Use the bounds variable to set the initial map view
+var southWest = L.latLng(bounds.minLat, bounds.minLng);
+var northEast = L.latLng(bounds.maxLat, bounds.maxLng);
+var bounds = L.latLngBounds(southWest, northEast);
+map.fitBounds(bounds);
 //map.addControl(new chartControl());
 
 // Add the tile layer (map tiles from OpenStreetMap)
@@ -30,7 +34,9 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}
         minZoom: 0,
         maxZoom: 10,
         tms: false,
-        attribution: ''
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, '+
+                             '© <a href="https://carto.com/attribution">CARTO</a>, '+
+                             '<a href="https://earth.esa.int/web/guest/missions/esa-eo-missions/sentinel-5p">ESA/Copernicus</a>',
 }).addTo(map);
 
 L.control.zoom({
