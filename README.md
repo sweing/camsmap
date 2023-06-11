@@ -1,6 +1,6 @@
 # CAMS Map
 
-Hosted [here](https://www.nebulaverse.space/camsapp).
+Hosted [here](https://www.nebulaverse.space/camsmap).
 
 ## Introduction
 
