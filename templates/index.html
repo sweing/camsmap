@@ -10,10 +10,8 @@
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
-  <body class="dark-theme">
-    <div id="main">
-      
-        
+  <body>
+    <div id="main"> 
       <div id="sidebar">
         <div class="loader"></div> <!-- Add the loader element to the sidebar -->
         <div id="sidebar-content">
@@ -30,19 +28,23 @@
 
           This small project asks the following question: Would it be valuable to have an indicator that tracks and rewards cities for their efforts in reducing NO2 emissions? How can we implement such indicator that measures progress in reducing NO2 levels over time?<br><br>
 
+          The inclusion of a map in our visualization serves multiple purposes. Firstly, it provides spatial encoding, allowing users to select specific cities of interest directly from the map interface. This enhances the user experience and facilitates intuitive exploration of the data. Additionally, the map showcases NO2 Tiles, offering viewers a glimpse of how satellite data can be used for global calculations. By integrating these tiles, we provide a visual representation of the potential for scaling this competition system worldwide, demonstrating the broader scope and impact of NO2 reduction efforts.<br><br>
+
           The code is available on <a href="https://github.com/sweing/camsmap" target="_blank" rel="noopener noreferrer">GitHub</a>.
 
           <h2>Data</h2>
 
-          The dataset provides information on air quality in Europe and worldwide, based on satellite and ground-based observations and advanced numerical models. The dataset is produced by the Copernicus Atmosphere Monitoring Service (CAMS), which is part of the European Union’s Earth observation programme. 
+          The dataset provides information on air quality in 50 cities in Europe and Turkey, based on satellite and ground-based observations and advanced numerical models. The dataset is produced by the Copernicus Atmosphere Monitoring Service (CAMS), which is part of the European Union’s Earth observation programme.<br><br>
+
+          The <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">data</a> used for this project represents the background density of NO2 in the air in each city, measured in locations not remote from traffic, such as parks and similar areas.
 
           <h2>Raw data representation</h2>
           
-          The plot reveals the fluctuations and seasonality inherent in the raw data. NO2 levels tend to be noisier, with spikes and dips influenced by various factors, including traffic patterns, weather conditions, and industrial activities. Notably, NO2 levels often show higher concentrations during winter months.<br><br>
+          The chart reveals the fluctuations and seasonality inherent in the raw data. NO2 levels tend to be noisier, with spikes and dips influenced by various factors, including traffic patterns, weather conditions, and industrial activities. Notably, NO2 levels often show higher concentrations during winter months.<br><br>
 
           This unfiltered depiction of NO2 levels provides a clear picture of the real-time variations experienced by each city, offering insights into the immediate impact of local emissions and external factors on air quality.<br><br>
 
-          By observing this plot, we can identify cities with higher or lower average NO2 levels, assess the extent of fluctuations, and gain a preliminary understanding of the NO2 dynamics across the 50 European cities in our dataset.
+          By observing this chart, we can identify cities with higher or lower average NO2 levels, assess the extent of fluctuations, and gain a preliminary understanding of the NO2 dynamics across the 50 cities in our dataset.
           <br></div>
           
           <div id="chart-container">
@@ -57,13 +59,13 @@
 
           <h2>Deseasonalization</h2>
 
-          The second plot presents a deseasonalized view of NO2 data, offering a clearer understanding of the medium-term trends in NO2 levels across the 50 European cities.<br><br>
+          The second chart presents a deseasonalized view of NO2 data, offering a clearer understanding of the medium-term trends in NO2 levels across the 50 cities in the dataset.<br><br>
 
           To achieve deseasonalization, we apply a composite moving average calculation. This method combines the moving averages of different timeframes to create a more balanced indicator of NO2 levels. The weights assigned to each moving average ensure a focus on the middle run, capturing both short-term fluctuations and longer-term patterns.<br><br>
 
-          By selecting the deseasonalized view in the dropdown menu, you can compare two options: the composite moving average and the 365-day moving average. The composite moving average emphasizes the medium-term trends by considering the last 365 days, 2 years, and 3 years, while the 365-day moving average considers only the last 365 days.<br><br>
+          By selecting the deseasonalized view in the dropdown menu, you can compare two options: the composite moving average and the 365-day moving average. The composite moving average emphasizes the medium-term trends by considering the last 365 days (weighted 60%), 2 years (30%), and 3 years (10%), while the 365-day moving average considers only the last 365 days.<br><br>
 
-          This deseasonalized plot allows us to discern patterns beyond immediate fluctuations, providing a clearer insight into the overall trajectory of NO2 levels over time. It helps identify periods of consistent improvement or deterioration and facilitates the evaluation of long-term efforts to reduce NO2 emissions.<br></div>
+          This deseasonalized data in this chart allows us to discern patterns beyond immediate fluctuations, providing a clearer insight into the overall trajectory of NO2 levels over time. It helps identify periods of consistent improvement or deterioration and facilitates the evaluation of long-term efforts to reduce NO2 emissions.<br></div>
           <div class="table-container">
             <div class="table-row">
               <div class="table-cell">
@@ -98,11 +100,11 @@
 
           <h2>A contest to slash NO2 levels</h2>
 
-          The third plot introduces a contest centered around NO2 reduction among the 50 European cities. This competition aims to recognize and celebrate the cities that achieve the most significant reductions in NO2 levels over a specific period.<br><br>
+          The third chart introduces a contest centered around NO2 reduction among the 50 cities in the dataset. This competition aims to recognize and celebrate the cities that achieve the most significant reductions in NO2 levels over a specific period.<br><br>
 
-          Using the dropdown menus, you can choose between two time frames, yearly and monthly. Once selected, you can further specify the year or month of interest. The plot then indexes all NO2 data points to 100 at the beginning of the chosen period.<br><br>
+          Using the dropdown menus, you can choose between two time frames, yearly and monthly. Once selected, you can further specify the year or month of interest. The chart then indexes all NO2 data points to 100 at the beginning of the chosen period.<br><br>
 
-          As time progresses, the plot tracks the changes in NO2 levels for each city. At the end of the month or year, the city that has achieved the most substantial reduction in NO2 levels, relative to their initial index of 100, is crowned the champion.<br><br>
+          As time progresses, the chart tracks the changes in NO2 levels for each city. At the end of the month or year, the city that has achieved the most substantial reduction in NO2 levels, relative to their initial index of 100, is crowned the champion.<br><br>
 
           This competition encourages cities to actively work towards reducing NO2 emissions, fostering a sense of friendly rivalry and collective progress. It provides a visual representation of each city's journey, highlighting the efforts made and the positive impact achieved in terms of NO2 reduction.<br><br>
 
@@ -162,7 +164,6 @@
           Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, own calculations.
 
           <h2>Outlook</h2>
-
           Wouldn't it be exciting to have an ongoing championship that tracks NO2 reduction progress, motivating cities to push the boundaries of sustainability and environmental stewardship? Let's envision a future where this competition becomes a catalyst for change and inspires cities worldwide to embark on their own journeys towards cleaner air and a greener planet.<br><br>
 
           Imagine a global competition system supported by satellite data, driving places worldwide to compete in reducing NO2 emissions. This scalable approach harnesses the power of technology to monitor and measure progress on a grand scale. By leveraging satellite data, we can assess NO2 levels with precision, empowering places from every corner of the globe to participate in this transformative competition. Let the race to reduce NO2 emissions begin.<br><br><br><br></div>

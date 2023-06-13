@@ -29,18 +29,46 @@ def get_data():
 
     # Extract the variable names (columns) except for 'city', 'lat', 'lng', 'year'
     variables = [col for col in data.columns if col not in ['city', 'lat', 'lng', 'year']]
-
-    # Serve the processed data to the front end
-    data_json = data.to_json(orient='records')
+    
+    data['year'] = pd.to_datetime(data['year'])
 
     # Extract unique years and months
-    data['year'] = pd.to_datetime(data['year'])
+    
     years = sorted(data['year'].dt.year.unique(), reverse=True)
     months = sorted(data['year'].dt.month.unique())
 
     max_year = data['year'].dt.year.max()
     max_year_data = data[data['year'].dt.year == max_year]
     last_month = max_year_data['year'].dt.month.max()
+
+    # Determine the winner for each month
+    data['winner_month'] = ""
+    for year in data['year'].dt.year.unique():
+        for month in data['year'].dt.month.unique():
+            month_data = data[(data['year'].dt.year == year) & (data['year'].dt.month == month)]
+            if month_data['year'].dt.month.max() == month and month_data['year'].dt.year.max() != pd.to_datetime('today').year:
+                last_day_data = month_data[month_data['year'] == month_data['year'].max()]
+                if len(last_day_data) > 0:
+                    min_monthly_index = last_day_data['Monthly Index Race'].min()
+                    winner_city_month = last_day_data[last_day_data['Monthly Index Race'] == min_monthly_index]['city'].values[0]
+                    data.loc[(data['year'].dt.year == year) & (data['year'].dt.month == month), 'winner_month'] = winner_city_month
+
+    # Determine the winner for each year
+    data['winner_year'] = ""
+    for year in data['year'].dt.year.unique():
+        year_data = data[data['year'].dt.year == year]
+        if year_data['year'].dt.year.max() != pd.to_datetime('today').year:
+            last_day_data = year_data[year_data['year'] == year_data['year'].max()]
+            if len(last_day_data) > 0:
+                min_yearly_index = last_day_data['Yearly Index Race'].min()
+                winner_city_year = last_day_data[last_day_data['Yearly Index Race'] == min_yearly_index]['city'].values[0]
+                data.loc[data['year'].dt.year == year, 'winner_year'] = winner_city_year
+
+
+
+    data['year'] = data['year'].dt.strftime('%Y-%m-%d')
+    # Serve the processed data to the front end
+    data_json = data.to_json(orient='records')
 
     # return the index file and the data
     return render_template("index.html", data=data_json, variables=variables, years=years, months=months, last_month = last_month, max_year = max_year, bounds=json.dumps(bounds))

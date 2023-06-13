@@ -73,6 +73,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     strokeWidth = 1.5, // stroke width of line
     strokeOpacity, // stroke opacity of line
     mixBlendMode = "multiply", // blend mode of lines
+    winner = "",
     voronoi // show a Voronoi overlay? (for debugging)
   } = {}) {
     // Compute values.
@@ -167,6 +168,14 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
             .attr("fill", "currentColor")
             .attr("text-anchor", "start")
             .text(yLabel));
+
+    // Add the "Winner" text in the middle of the chart
+    svg.append("text")
+      .attr("x", width / 2)
+      .attr("y", height / 2)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .text(winner);
 
     const path = svg.append("g")
         .attr("fill", "none")
