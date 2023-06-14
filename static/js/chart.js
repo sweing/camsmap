@@ -193,10 +193,12 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     // Add the "Winner" text in the middle of the chart
     svg.append("text")
       .attr("x", width / 2)
-      .attr("y", marginTop)
+      .attr("y", marginTop+10)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .text(winner);
+      .text(winner)
+      .transition()
+      .style("font-size", "50px").delay(1000).duration(1000);
 
     const path = svg.append("g")
         .attr("fill", "none")
