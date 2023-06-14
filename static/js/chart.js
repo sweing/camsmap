@@ -3,6 +3,7 @@ let pathSelections = []; // Array to store path selections
 
 
 function linechart(data, indexType, yearType, monthType, chartElement = "chart-raw") {
+  let winner = [];
   const parseDate = d3.timeParse("%Y-%m-%d");
   var CustomCircleMarker = L.CircleMarker.extend({
       options: {
@@ -17,6 +18,11 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     xTickFormat = "%b"
     let currentYear = d3.max(data, d => parseDate(d.year).getFullYear());
     data = data.filter(d => parseDate(d.year).getFullYear() === parseInt(yearType));
+    data.forEach(item => {
+      winner.push(item.winner_year);
+    });
+
+    winner = [...new Set(winner)];
   }
   if(indexType == "Monthly Index Race") {
     xTickFormat = "%d"
@@ -27,6 +33,13 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
       const date = parseDate(d.year);
       return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
     });
+
+    data.forEach(item => {
+      winner.push(item.winner_month);
+    });
+
+    winner = [...new Set(winner)];
+    winner = winner  + " wins!"
   }
 
   chart =  LineChart(data, {
@@ -38,6 +51,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     width: document.getElementById(chartElement).offsetWidth,
     height: 400,
     color: "steelblue",
+    winner: winner,
     //yLabel: "Nitrogen dioxide, composite 1-to-3-year-moving-averages (60/30/10)",
     //voronoi: true // if true, show Voronoi overlay
 
@@ -172,7 +186,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     // Add the "Winner" text in the middle of the chart
     svg.append("text")
       .attr("x", width / 2)
-      .attr("y", height / 2)
+      .attr("y", marginTop)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
       .text(winner);
