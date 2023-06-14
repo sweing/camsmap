@@ -23,6 +23,11 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     });
 
     winner = [...new Set(winner)];
+
+    if (winner[0] !== null) {
+      winner = winner  + " wins!"
+    }
+    
   }
   if(indexType == "Monthly Index Race") {
     xTickFormat = "%d"
@@ -39,7 +44,9 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     });
 
     winner = [...new Set(winner)];
-    winner = winner  + " wins!"
+    if (winner[0] !== null) {
+      winner = winner  + " wins!"
+    }
   }
 
   chart =  LineChart(data, {
