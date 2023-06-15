@@ -5,6 +5,8 @@ import json
 import pandas as pd
 import calendar
 
+print("!!! Served on ip:port/camsmap !!!")
+
 app = Flask(__name__, static_url_path='/camsmap/static')
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
