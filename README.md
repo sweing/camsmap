@@ -2,7 +2,7 @@
 
 Hosted [here](https://www.nebulaverse.space/camsmap).
 
-![Screenshot](screenshot.jpg)
+![Screenshot](screenshot.png)
 
 ## Introduction
 
