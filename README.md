@@ -2,6 +2,8 @@
 
 Hosted [here](https://www.nebulaverse.space/camsmap).
 
+![Screenshot](screenshot.jpg)
+
 ## Introduction
 
 Nitrogen dioxide (NO2), a byproduct of burning fossil fuels, can serve as a visible marker of our climate emergency. As these fuels are burned, NO2 is released into the atmosphere, alongside CO2, exacerbating climate change. Understanding this connection can give us opportunities in our efforts to combat the environmental crisis we face.
