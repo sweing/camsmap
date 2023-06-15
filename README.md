@@ -15,3 +15,16 @@ This small project asks the following question: Wouldn't it be valuable to have 
 ## Data
 
 The dataset provides information on air quality in Europe and worldwide, based on satellite and ground-based observations and advanced numerical models. The dataset is produced by the Copernicus Atmosphere Monitoring Service (CAMS), which is part of the European Union’s Earth observation programme. It is available on [GitHub](https://github.com/CopernicusAtmosphere/air-quality-covid19-response)
+
+## Run
+```bash
+# Create and activate virtual environment:
+python -m env env
+. env/bin/activate
+
+# Install required packages:
+pip install -r requirements.txt
+
+# Run dev server, served to ip:port/camsmap
+python ./app.py
+```
