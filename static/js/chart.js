@@ -14,7 +14,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
   //var indexType = document.getElementById('chart-type').value;
   let xTickFormat = "%Y"
 
-  if(indexType == "Yearly Index Race") {
+  if(indexType == "Yearly Index Challenge") {
     xTickFormat = "%b"
     let currentYear = d3.max(data, d => parseDate(d.year).getFullYear());
     data = data.filter(d => parseDate(d.year).getFullYear() === parseInt(yearType));
@@ -29,7 +29,7 @@ function linechart(data, indexType, yearType, monthType, chartElement = "chart-r
     }
     
   }
-  if(indexType == "Monthly Index Race") {
+  if(indexType == "Monthly Index Challenge") {
     xTickFormat = "%d"
     const currentDate = d3.max(data, d => parseDate(d.year));
     const currentMonth = parseInt(monthType)-1;
