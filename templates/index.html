@@ -1,238 +1,285 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>#decarbnow Pollution Challenge</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 
-    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-  </head>
-  <body>
-    <div id="main"> 
-      <div id="sidebar">
-        <div class="loader"></div> <!-- Add the loader element to the sidebar -->
-        <div id="sidebar-content">
-          
-          <div id="sidebar-text"> <h1>#decarbnow Pollution Challenge</h1>
+<head>
+  <title>#decarbnow Pollution Challenge</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <div id="sidebar">
+      <div class="loader"></div> <!-- Add the loader element to the sidebar -->
+      <div id="sidebar-content">
+
+        <div id="sidebar-text">
+          <h1>#decarbnow Pollution Challenge</h1>
 
           <h2>About</h2>
 
-          <h3>The #decarbnow Pollution Challenge aims to motivate and inspire cities to actively participate in reducing emissions from the burning of fossil fuels, thus promoting a movement towards cleaner air and a sustainable future.</h3>
-          
-          Society rewards progress and innovation in many areas of life. Extending this concept to climate change, we should reward efforts to address the global challenge. Nitrogen dioxide (NO2) from burning fossil fuels is a visible sign of the climate emergency, affecting air quality and human health. By reducing NO2 emissions, we improve air quality, protect health, and address the root cause of climate change. This project aims to implement an NO2 index for city comparisons and visualize the data to inspire NO2 emission reductions.<br><br>
+          <h3>The #decarbnow Pollution Challenge aims to motivate and inspire cities to actively participate in reducing
+            emissions from the burning of fossil fuels, thus promoting a movement towards cleaner air and a sustainable
+            future.</h3>
 
-          The code is available on <a href="https://github.com/sweing/camsmap" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          Society rewards progress and innovation in many areas of life. Extending this concept to climate change, we
+          should reward efforts to address the global challenge. Nitrogen dioxide (NO2) from burning fossil fuels is a
+          visible sign of the climate emergency, affecting air quality and human health. By reducing NO2 emissions, we
+          improve air quality, protect health, and address the root cause of climate change. This project aims to
+          implement an NO2 index for city comparisons and visualize the data to inspire NO2 emission reductions.<br><br>
+
+          The code is available on <a href="https://github.com/sweing/camsmap" target="_blank"
+            rel="noopener noreferrer">GitHub</a>.
 
           <h2>Data</h2>
-          The <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">dataset</a> used in this project provides air quality information for 50 European and Turkish cities. It includes satellite and ground-based observations as well as advanced numerical models. It is produced by the Copernicus Atmosphere Monitoring Service (CAMS) under the EU's Earth observation program. The data examines background NO2 levels in each city.
+          The <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank"
+            rel="noopener noreferrer">dataset</a> used in this project provides air quality information for 50 European
+          and Turkish cities. It includes satellite and ground-based observations as well as advanced numerical models.
+          It is produced by the Copernicus Atmosphere Monitoring Service (CAMS) under the EU's Earth observation
+          program. The data examines background NO2 levels in each city.
 
           <h2>Raw data representation</h2>
-          
-          The raw data plot shows the inherent variability and seasonality of NO2 levels influenced by factors such as traffic, weather and industry. Winter months often have higher concentrations. This unfiltered view provides insight into real-time variations, showing the immediate impact of local emissions and external factors on air quality. By looking at this graph, we can gain an understanding of the dynamics of NO2 across the 50 cities in the dataset.
-          <br></div>
-          
-          <div id="chart-container">
-            <div id="chart-raw">
-              <!-- Chart content goes here -->
-            </div>
+
+          The raw data plot shows the inherent variability and seasonality of NO2 levels influenced by factors such as
+          traffic, weather and industry. Winter months often have higher concentrations. This unfiltered view provides
+          insight into real-time variations, showing the immediate impact of local emissions and external factors on air
+          quality. By looking at this graph, we can gain an understanding of the dynamics of NO2 across the 50 cities in
+          the dataset.
+          <br>
+        </div>
+
+        <div id="chart-container">
+          <div id="chart-raw">
+            <!-- Chart content goes here -->
           </div>
-          
-          
-          <div id="sidebar-text"> 
-          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank" rel="noopener noreferrer">Observable</a>.
+        </div>
+
+
+        <div id="sidebar-text">
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank"
+            rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank"
+            rel="noopener noreferrer">Observable</a>.
 
           <h2>Deseasonalization</h2>
 
-          The second graph provides a deseasonalized view of the NO2 data, providing insight into medium-term trends across the 50 cities in the dataset. A composite moving average calculation is used, combining different time periods to create a balanced indicator. The drop-down menu allows you to choose between the composite moving average (weighted 365 days, 2 years and 3 years) and the 365-day moving average.
+          The second graph provides a deseasonalized view of the NO2 data, providing insight into medium-term trends
+          across the 50 cities in the dataset. A composite moving average calculation is used, combining different time
+          periods to create a balanced indicator. The drop-down menu allows you to choose between the composite moving
+          average (weighted 365 days, 2 years and 3 years) and the 365-day moving average.
 
-          This de-seasonalized data reveals patterns beyond immediate fluctuations and provides a clearer understanding of NO2 trends over time. It helps identify consistent improvements or deteriorations and facilitates the evaluation of mid-term efforts to reduce NO2 emissions.<br></div>
-          <div class="table-container">
-            <div class="table-row">
-              <div class="table-cell">
-                <label for="chart-type-averages">Variable:</label>
-              </div>
-              <div class="table-cell">
-<!--                 <select id="chart-type" class="dropdown">
+          This de-seasonalized data reveals patterns beyond immediate fluctuations and provides a clearer understanding
+          of NO2 trends over time. It helps identify consistent improvements or deteriorations and facilitates the
+          evaluation of mid-term efforts to reduce NO2 emissions.<br>
+        </div>
+        <div class="table-container">
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="chart-type-averages">Variable:</label>
+            </div>
+            <div class="table-cell">
+              <!--                 <select id="chart-type" class="dropdown">
                   {% for col in variables %}
                     <option value="{{ col }}">{{ col }}</option>
                   {% endfor %}
                 </select> -->
-                <select id="chart-type-averages" class="dropdown">
-                  {% for col in ["365d moving average", "Composite moving average"] %}
-                    {% if col == "Composite moving average" %}
-                      <option value="{{ col }}" selected>{{ col }}</option>
-                    {% else %}
-                      <option value="{{ col }}">{{ col }}</option>
-                    {% endif %}                  
-                  {% endfor %}
-                </select><br><br>
-              </div>
+              <select id="chart-type-averages" class="dropdown">
+                {% for col in ["365d moving average", "Composite moving average"] %}
+                {% if col == "Composite moving average" %}
+                <option value="{{ col }}" selected>{{ col }}</option>
+                {% else %}
+                <option value="{{ col }}">{{ col }}</option>
+                {% endif %}
+                {% endfor %}
+              </select><br><br>
             </div>
           </div>
-          <div id="chart-container">
-            <div id="chart-averages">
-              <!-- Chart content goes here -->
-            </div>
+        </div>
+        <div id="chart-container">
+          <div id="chart-averages">
+            <!-- Chart content goes here -->
           </div>
+        </div>
 
-          <div id="sidebar-text">
-          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank" rel="noopener noreferrer">Observable</a>, own calculations.
+        <div id="sidebar-text">
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank"
+            rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank"
+            rel="noopener noreferrer">Observable</a>, own calculations.
 
           <h2 id="contest">A contest to slash NO2 levels</h2>
 
-          This graph introduces a competition between the 50 cities in the dataset to reduce NO2 levels. Within this competition, participants can choose either an annual or monthly time frame, allowing them to monitor the fluctuations in NO2 concentrations over the specified time period. Ultimately, the city that achieves the greatest NO2 reduction at the end of the specified timeframe emerges as the winner.<br>
+          This graph introduces a competition between the 50 cities in the dataset to reduce NO2 levels. Within this
+          competition, participants can choose either an annual or monthly time frame, allowing them to monitor the
+          fluctuations in NO2 concentrations over the specified time period. Ultimately, the city that achieves the
+          greatest NO2 reduction at the end of the specified timeframe emerges as the winner.<br>
 
-          </div>
+        </div>
 
-          <div class="table-container">
-            <div class="table-row">
-              <div class="table-cell">
-                <label for="chart-type-index">Variable:</label>
-              </div>
-              <div class="table-cell">
-                <select id="chart-type-index" class="dropdown">
-                  {% for col in ["Monthly Index Challenge", "Yearly Index Challenge"] %}
-                    {% if col == "Yearly Index Challenge" %}
-                      <option value="{{ col }}" selected>{{ col }}</option>
-                    {% else %}
-                      <option value="{{ col }}">{{ col }}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
-              </div>
+        <div class="table-container">
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="chart-type-index">Variable:</label>
             </div>
-
-            <div class="table-row">
-              <div class="table-cell">
-                <label for="month-type-index">Month:</label>
-              </div>
-              <div class="table-cell">
-                <select id="month-type-index" class="dropdown">
-                  {% for month in months %}
-                    <option value="{{ month }}" {% if month == last_month %}selected{% endif %}>{{ month }}</option>
-                  {% endfor %}
-                </select>
-
-              </div>
-            </div>
-
-            <div class="table-row">
-              <div class="table-cell">
-                <label for="year-type-index">Year:</label>
-              </div>
-              <div class="table-cell">
-                <select id="year-type-index" class="dropdown">
-                  {% for year in years %}
-                    <option value="{{ year }}" {% if year == max_year %}selected{% endif %}>{{ year }}</option>
-                  {% endfor %}
-                </select>
-              </div>
+            <div class="table-cell">
+              <select id="chart-type-index" class="dropdown">
+                {% for col in ["Monthly Index Challenge", "Yearly Index Challenge"] %}
+                {% if col == "Yearly Index Challenge" %}
+                <option value="{{ col }}" selected>{{ col }}</option>
+                {% else %}
+                <option value="{{ col }}">{{ col }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
             </div>
           </div>
-          <div id="chart-container">
-            <div id="chart-index">
-              <!-- Chart content goes here -->
+
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="month-type-index">Month:</label>
+            </div>
+            <div class="table-cell">
+              <select id="month-type-index" class="dropdown">
+                {% for month in months %}
+                <option value="{{ month }}" {% if month==last_month %}selected{% endif %}>{{ month }}</option>
+                {% endfor %}
+              </select>
+
             </div>
           </div>
-          <div id="sidebar-text">
-          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank" rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank" rel="noopener noreferrer">Observable</a>, own calculations.<br><br>
 
-          This competition encourages cities to actively work towards reducing NO2 emissions, fostering challenge and collective progress. It showcases success stories, inspires healthy competition and empowers cities to make a tangible difference in their local environment. It stimulates innovation and collaboration and contributes to the wider goal of tackling climate change.<br>
+          <div class="table-row">
+            <div class="table-cell">
+              <label for="year-type-index">Year:</label>
+            </div>
+            <div class="table-cell">
+              <select id="year-type-index" class="dropdown">
+                {% for year in years %}
+                <option value="{{ year }}" {% if year==max_year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="chart-container">
+          <div id="chart-index">
+            <!-- Chart content goes here -->
+          </div>
+        </div>
+        <div id="sidebar-text">
+          Source: <a href="https://github.com/CopernicusAtmosphere/air-quality-covid19-response" target="_blank"
+            rel="noopener noreferrer">CAMS</a>, <a href="https://observablehq.com/@d3/multi-line-chart" target="_blank"
+            rel="noopener noreferrer">Observable</a>, own calculations.<br><br>
+
+          This competition encourages cities to actively work towards reducing NO2 emissions, fostering challenge and
+          collective progress. It showcases success stories, inspires healthy competition and empowers cities to make a
+          tangible difference in their local environment. It stimulates innovation and collaboration and contributes to
+          the wider goal of tackling climate change.<br>
 
           <h2>Outlook</h2>
-          The visualization provides a way to support and reward local environmental NGOs. It enables fundraising campaigns, promotes community engagement, and showcases the progress made in reducing NO2 emissions. By extending the competitive aspect, we can incentivize and recognize the achievements of these organizations. This will hopefully create a cycle of progress and support towards a cleaner, healthier and more sustainable future. Satellite data enables global expansion beyond city limits.<p style="margin-bottom: 300px;">&nbsp;</p></div>
+          The visualization provides a way to support and reward local environmental NGOs. It enables fundraising
+          campaigns, promotes community engagement, and showcases the progress made in reducing NO2 emissions. By
+          extending the competitive aspect, we can incentivize and recognize the achievements of these organizations.
+          This will hopefully create a cycle of progress and support towards a cleaner, healthier and more sustainable
+          future. Satellite data enables global expansion beyond city limits.<p style="margin-bottom: 300px;">&nbsp;</p>
         </div>
       </div>
-      <div id="map"></div>
     </div>
+    <div id="map"></div>
+  </div>
 
-    <!-- Our JavaScript -->
-    <script>
-      var bounds = {{ bounds|safe }};
-    </script>
+  <!-- Our JavaScript -->
+  <script>
+    var bounds = {{ bounds| safe }};
+  </script>
 
-    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
 
-    <script>
-      
-      // Get the hash from the URL (e.g., #section1)
-      var hash = window.location.hash;
+  <script>
 
-      // If a hash exists and corresponds to an element with that ID
-      if (hash && document.querySelector(hash)) {
-          // Scroll to the element with the specified ID
-          document.querySelector(hash).scrollIntoView();
+    // Get the hash from the URL (e.g., #section1)
+    var hash = window.location.hash;
+
+    // If a hash exists and corresponds to an element with that ID
+    if (hash && document.querySelector(hash)) {
+      // Scroll to the element with the specified ID
+      document.querySelector(hash).scrollIntoView();
+    }
+
+    var data = JSON.parse('{{ data|safe }}');
+    //console.log(data)
+    window.onload = function () {
+      hideLoader(); // Hide the loading spinner
+      showChartContent(); // Show the chart content
+      var chartTypeIndex = document.getElementById('chart-type-index').value;
+      var monthTypeIndex = document.getElementById('month-type-index');
+      var yearTypeIndex = document.getElementById('year-type-index').value;
+
+      linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
+      linechart(data, document.getElementById('chart-type-index').value, yearTypeIndex, monthTypeIndex.value, "chart-index");
+      linechart(data, 'Raw', null, null, "chart-raw");
+
+
+      if (chartTypeIndex === "Yearly Index Challenge") {
+        monthTypeIndex.disabled = true;
+        monthTypeIndex.style.opacity = '0.7';
       }
-    
-      var data = JSON.parse('{{ data|safe }}');
-      //console.log(data)
-      window.onload = function() {
-        hideLoader(); // Hide the loading spinner
-        showChartContent(); // Show the chart content
-        var chartTypeIndex = document.getElementById('chart-type-index').value;
-        var monthTypeIndex = document.getElementById('month-type-index');
-        var yearTypeIndex = document.getElementById('year-type-index').value;
+    };
 
-        linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
-        linechart(data, document.getElementById('chart-type-index').value, yearTypeIndex, monthTypeIndex.value, "chart-index");
-        linechart(data, 'Raw', null, null, "chart-raw");
+    function hideLoader() {
+      document.querySelector('.loader').style.display = 'none';
+    }
 
-        
-        if (chartTypeIndex === "Yearly Index Challenge") {
-          monthTypeIndex.disabled = true;
-          monthTypeIndex.style.opacity = '0.7';
-        }        
-      };
+    function showChartContent() {
+      //document.getElementById('chart-averages').style.display = 'block';
+      //document.getElementById('chart-raw').style.display = 'block';
+      //document.getElementById('chart-index').style.display = 'block';
+      document.getElementById('sidebar-content').style.display = 'block';
+    }
 
-      function hideLoader() {
-        document.querySelector('.loader').style.display = 'none';
+    // Add event listener to the dropdown menu
+    document.getElementById('chart-type-averages').addEventListener('change', function () {
+      document.getElementById('chart-averages').innerHTML = '';
+      linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
+    });
+
+    // Add event listener to the dropdown menu
+    document.getElementById('chart-type-index').addEventListener('change', function () {
+      var chartTypeIndex = document.getElementById('chart-type-index').value;
+      var monthTypeIndex = document.getElementById('month-type-index');
+
+      // Check if "Yearly Index Challenge" is selected
+      if (chartTypeIndex === 'Yearly Index Challenge') {
+        // Disable the month dropdown and add a grayed-out appearance
+        monthTypeIndex.disabled = true;
+        monthTypeIndex.style.opacity = '0.7';
+      } else {
+        // Enable the month dropdown and remove the grayed-out appearance
+        monthTypeIndex.disabled = false;
+        monthTypeIndex.style.opacity = '1';
       }
+      document.getElementById('chart-index').innerHTML = '';
+      linechart(data, chartTypeIndex, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+    });
 
-      function showChartContent() {
-        //document.getElementById('chart-averages').style.display = 'block';
-        //document.getElementById('chart-raw').style.display = 'block';
-        //document.getElementById('chart-index').style.display = 'block';
-        document.getElementById('sidebar-content').style.display = 'block';
-      }
+    document.getElementById('year-type-index').addEventListener('change', function () {
+      document.getElementById('chart-index').innerHTML = '';
+      linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+    });
 
-      // Add event listener to the dropdown menu
-      document.getElementById('chart-type-averages').addEventListener('change', function() {
-        document.getElementById('chart-averages').innerHTML = '';
-        linechart(data, document.getElementById('chart-type-averages').value, null, null, "chart-averages");
-      });
+    document.getElementById('month-type-index').addEventListener('change', function () {
+      document.getElementById('chart-index').innerHTML = '';
+      linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
+    });
+  </script>
+</body>
 
-      // Add event listener to the dropdown menu
-      document.getElementById('chart-type-index').addEventListener('change', function() {
-        var chartTypeIndex = document.getElementById('chart-type-index').value;
-        var monthTypeIndex = document.getElementById('month-type-index');
-
-        // Check if "Yearly Index Challenge" is selected
-        if (chartTypeIndex === 'Yearly Index Challenge') {
-          // Disable the month dropdown and add a grayed-out appearance
-          monthTypeIndex.disabled = true;
-          monthTypeIndex.style.opacity = '0.7';
-        } else {
-          // Enable the month dropdown and remove the grayed-out appearance
-          monthTypeIndex.disabled = false;
-          monthTypeIndex.style.opacity = '1';
-        }
-        document.getElementById('chart-index').innerHTML = '';
-        linechart(data, chartTypeIndex, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
-      });
-
-      document.getElementById('year-type-index').addEventListener('change', function() {
-        document.getElementById('chart-index').innerHTML = '';
-        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
-      });
-
-      document.getElementById('month-type-index').addEventListener('change', function() {
-        document.getElementById('chart-index').innerHTML = '';
-        linechart(data, document.getElementById('chart-type-index').value, document.getElementById('year-type-index').value, document.getElementById('month-type-index').value, "chart-index");
-      });
-    </script>
-  </body>
 </html>
